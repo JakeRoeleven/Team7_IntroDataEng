@@ -1,4 +1,4 @@
-function [trainedClassifier, validationAccuracy] = trainClassificationModel(trainingData)
+function [trainedClassifier, validationAccuracy] = trainOptimisedClassificationModel(trainingData)
 % [trainedClassifier, validationAccuracy] = trainClassifier(trainingData)
 % Returns a trained classifier and its accuracy. This code recreates the
 % classification model trained in Classification Learner app. Use the
@@ -62,7 +62,7 @@ classificationSVM = fitcecoc(...
     response, ...
     'Learners', template, ...
     'Coding', 'onevsone', ...
-    'ClassNames', {'Above Average'; 'Below Average'; 'Excellent'; 'Poor'});
+    'ClassNames', {'Above Average'; 'Below Average'});
 
 % Create the result struct with predict function
 predictorExtractionFcn = @(t) t(:, predictorNames);

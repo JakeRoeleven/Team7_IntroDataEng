@@ -1,4 +1,4 @@
-function [trainedModel, validationRMSE] = trainRegressionModel(trainingData)
+function [trainedModel, validationRMSE] = trainOptimisedRegressionModel(trainingData)
 % [trainedModel, validationRMSE] = trainRegressionModel(trainingData)
 % Returns a trained regression model and its RMSE. This code recreates the
 % model trained in Regression Learner app. Use the generated code to
@@ -41,7 +41,7 @@ function [trainedModel, validationRMSE] = trainRegressionModel(trainingData)
 % This code processes the data into the right shape for training the
 % model.
 inputTable = trainingData;
-predictorNames = {'ICSEA_value', 'Selective_school', 'School_gender', 'ASGS_remoteness', 'motor_vehicles_per_house', 'single_parent_families_pct', 'private_health_insurance_pct', 'retention_rate', 'crimes_per_person', 'EducationScore', 'BEScore'};
+predictorNames = {'ICSEA_value', 'Selective_school', 'ASGS_remoteness', 'single_parent_families_pct', 'private_health_insurance_pct', 'retention_rate', 'crimes_per_person', 'EducationScore', 'BEScore'};
 predictors = inputTable(:, predictorNames);
 response = inputTable.attendance;
 isCategoricalPredictor = [false, false, false, false, false, false, false, false, false, false, false];
@@ -61,7 +61,7 @@ linearModelPredictFcn = @(x) predict(linearModel, x);
 trainedModel.predictFcn = @(x) linearModelPredictFcn(predictorExtractionFcn(x));
 
 % Add additional fields to the result struct
-trainedModel.RequiredVariables = {'ASGS_remoteness', 'BEScore', 'EducationScore', 'ICSEA_value', 'School_gender', 'Selective_school', 'crimes_per_person', 'motor_vehicles_per_house', 'private_health_insurance_pct', 'retention_rate', 'single_parent_families_pct'};
+trainedModel.RequiredVariables = {'ASGS_remoteness', 'BEScore', 'EducationScore', 'ICSEA_value', 'Selective_school', 'crimes_per_person', 'private_health_insurance_pct', 'retention_rate', 'single_parent_families_pct'};
 trainedModel.LinearModel = linearModel;
 trainedModel.About = 'This struct is a trained model exported from Regression Learner R2021b.';
 trainedModel.HowToPredict = sprintf('To make predictions on a new table, T, use: \n  yfit = c.predictFcn(T) \nreplacing ''c'' with the name of the variable that is this struct, e.g. ''trainedModel''. \n \nThe table, T, must contain the variables returned by: \n  c.RequiredVariables \nVariable formats (e.g. matrix/vector, datatype) must match the original training data. \nAdditional variables are ignored. \n \nFor more information, see <a href="matlab:helpview(fullfile(docroot, ''stats'', ''stats.map''), ''appregression_exportmodeltoworkspace'')">How to predict using an exported model</a>.');
@@ -70,10 +70,10 @@ trainedModel.HowToPredict = sprintf('To make predictions on a new table, T, use:
 % This code processes the data into the right shape for training the
 % model.
 inputTable = trainingData;
-predictorNames = {'ICSEA_value', 'Selective_school', 'School_gender', 'ASGS_remoteness', 'motor_vehicles_per_house', 'single_parent_families_pct', 'private_health_insurance_pct', 'retention_rate', 'crimes_per_person', 'EducationScore', 'BEScore'};
+predictorNames = {'ICSEA_value', 'Selective_school', 'ASGS_remoteness', 'single_parent_families_pct', 'private_health_insurance_pct', 'retention_rate', 'crimes_per_person', 'EducationScore', 'BEScore'};
 predictors = inputTable(:, predictorNames);
 response = inputTable.attendance;
-isCategoricalPredictor = [false, false, false, false, false, false, false, false, false, false, false];
+isCategoricalPredictor = [false, false, false, false, false, false, false, false, false];
 
 % Perform cross-validation
 KFolds = 5;
